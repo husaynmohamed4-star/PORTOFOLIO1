@@ -1,0 +1,233 @@
+{
+  "categories": [
+    {
+      "id": "social",
+      "page": "social.html",
+      "title": "Social Media",
+      "nav": "Social Media",
+      "kicker": "Social Media",
+      "description": "The complete original social media collection — {count} designs.",
+      "layout": "grid",
+      "items": [
+        {
+          "src": "images/social1.jpg",
+          "title": "Social Media 1"
+        },
+        {
+          "src": "images/social2.jpg",
+          "title": "Social Media 2"
+        },
+        {
+          "src": "images/social3.jpg",
+          "title": "Social Media 3"
+        },
+        {
+          "src": "images/social4.jpg",
+          "title": "Social Media 4"
+        },
+        {
+          "src": "images/social5.jpg",
+          "title": "Social Media 5"
+        },
+        {
+          "src": "images/social6.jpg",
+          "title": "Social Media 6"
+        },
+        {
+          "src": "images/social7.jpg",
+          "title": "Social Media 7"
+        },
+        {
+          "src": "images/social8.jpg",
+          "title": "Social Media 8"
+        },
+        {
+          "src": "images/social9.jpg",
+          "title": "Social Media 9"
+        },
+        {
+          "src": "images/social10.jpg",
+          "title": "Social Media 10"
+        },
+        {
+          "src": "images/social11.jpg",
+          "title": "Social Media 11"
+        },
+        {
+          "src": "images/social12.jpg",
+          "title": "Social Media 12"
+        },
+        {
+          "src": "images/social13.jpg",
+          "title": "Social Media 13"
+        },
+        {
+          "src": "images/social14.jpg",
+          "title": "Social Media 14"
+        },
+        {
+          "src": "images/social15.jpg",
+          "title": "Social Media 15"
+        },
+        {
+          "src": "images/social16.jpg",
+          "title": "Social Media 16"
+        },
+        {
+          "src": "images/social17.jpg",
+          "title": "Social Media 17"
+        },
+        {
+          "src": "images/social18.jpg",
+          "title": "Social Media 18"
+        },
+        {
+          "src": "images/social19.jpg",
+          "title": "Social Media 19"
+        },
+        {
+          "src": "images/social20.jpg",
+          "title": "Social Media 20"
+        },
+        {
+          "src": "images/social21.jpg",
+          "title": "Social Media 21"
+        },
+        {
+          "src": "images/social22.jpg",
+          "title": "Social Media 22"
+        },
+        {
+          "src": "images/social23.jpg",
+          "title": "Social Media 23"
+        },
+        {
+          "src": "images/social24.jpg",
+          "title": "Social Media 24"
+        },
+        {
+          "src": "images/social25.jpg",
+          "title": "Social Media 25"
+        },
+        {
+          "src": "images/social26.jpg",
+          "title": "Social Media 26"
+        },
+        {
+          "src": "images/social27.jpg",
+          "title": "Social Media 27"
+        },
+        {
+          "src": "images/social28.jpg",
+          "title": "Social Media 28"
+        },
+        {
+          "src": "images/social29.jpg",
+          "title": "Social Media 29"
+        },
+        {
+          "src": "images/social30.jpg",
+          "title": "Social Media 30"
+        },
+        {
+          "src": "images/social31.jpg",
+          "title": "Social Media 31"
+        },
+        {
+          "src": "images/social32.jpg",
+          "title": "Social Media 32"
+        },
+        {
+          "src": "images/social33.jpg",
+          "title": "Social Media 33"
+        },
+        {
+          "src": "images/social34.jpg",
+          "title": "Social Media 34"
+        },
+        {
+          "src": "images/social35.jpg",
+          "title": "Social Media 35"
+        },
+        {
+          "src": "images/social36.jpg",
+          "title": "Social Media 36"
+        },
+        {
+          "src": "images/social37.jpg",
+          "title": "Social Media 37"
+        },
+        {
+          "src": "images/social38.jpg",
+          "title": "Social Media 38"
+        },
+        {
+          "src": "images/social40.jpg",
+          "title": "Social Media 39"
+        },
+        {
+          "src": "images/social41.jpg",
+          "title": "Social Media 40"
+        },
+        {
+          "src": "images/social42.jpg",
+          "title": "Social Media 41"
+        },
+        {
+          "src": "images/social43.jpg",
+          "title": "Social Media 42"
+        },
+        {
+          "src": "images/social44.jpg",
+          "title": "Social Media 43"
+        },
+        {
+          "src": "images/social45.jpg",
+          "title": "Social Media 44"
+        }
+      ]
+    },
+    {
+      "id": "branding",
+      "page": "branding.html",
+      "title": "Branding Projects",
+      "nav": "Branding",
+      "kicker": "Brand Identity",
+      "description": "Original branding projects — {count} projects.",
+      "layout": "brand",
+      "items": [
+        {
+          "src": "pdf1/noir.png",
+          "title": "Noir"
+        },
+        {
+          "src": "pdf2/rawaq.png",
+          "title": "Rawaq"
+        },
+        {
+          "src": "pdf4/SIMT.png",
+          "title": "SIMT"
+        }
+      ]
+    },
+    {
+      "id": "logos",
+      "page": "logos.html",
+      "title": "Logo Design",
+      "nav": "Logos",
+      "kicker": "Logo Design",
+      "description": "The complete original logo collection — {count} projects.",
+      "layout": "brand",
+      "items": [
+        {
+          "src": "images/logo1.jpg.jpg",
+          "title": "Logo Design 1"
+        },
+        {
+          "src": "images/logo2.jpg.jpg",
+          "title": "Logo Design 2"
+        }
+      ]
+    }
+  ]
+}
