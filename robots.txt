@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://husaynmohamed4-star.github.io/PORTOFOLIO1/sitemap.xml
