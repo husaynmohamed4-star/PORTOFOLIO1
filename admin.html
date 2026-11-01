@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>لوحة التحكم — Hussein Mohamed</title>
+<style>
+:root{--paper:#f3f0e8;--ink:#171815;--acid:#d9ff42;--line:#d8d5ca;--card:#e9e6dc;--muted:#6b6c63;--danger:#d2432a;--ok:#4f7d00}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Cairo,Tahoma,Arial,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;padding-bottom:90px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:20}
+.top h1{font-size:18px;font-weight:800}
+.top h1 small{display:block;font-size:11px;color:var(--muted);font-weight:600}
+.btn{border:1px solid var(--ink);background:transparent;padding:8px 16px;border-radius:4px;font-weight:700;font-size:13px;transition:.15s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.solid:hover{background:#000}
+.btn.acid{background:var(--acid);border-color:var(--ink);color:var(--ink)}
+.btn.acid:hover{background:#c9ee2e;color:var(--ink)}
+.btn.danger{border-color:var(--danger);color:var(--danger)}
+.btn.danger:hover{background:var(--danger);color:#fff}
+.btn.sm{padding:4px 10px;font-size:12px}
+.btn:disabled{opacity:.4;pointer-events:none}
+.wrap{max-width:1250px;margin:0 auto;padding:22px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px}
+label{display:block;font-size:12px;font-weight:700;margin:12px 0 4px;color:#3b3c36}
+input[type=text],input[type=password],select,textarea{width:100%;padding:9px 11px;border:1px solid #c9c5b8;background:#fbfaf6;border-radius:3px;font-size:14px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acid);border-color:var(--ink)}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.connect{max-width:560px;margin:40px auto}
+.connect h2{font-size:22px;margin-bottom:4px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+details{margin-top:16px;background:#fbfaf6;border:1px solid var(--line);border-radius:3px;padding:10px 14px;font-size:13px}
+details summary{cursor:pointer;font-weight:700}
+details ol{padding-inline-start:20px;margin-top:8px}
+details li{margin:4px 0}
+details a{color:#4a6300;font-weight:700}
+.layout{display:grid;grid-template-columns:270px 1fr;gap:22px;align-items:start}
+.cats{display:flex;flex-direction:column;gap:6px}
+.cat{display:flex;align-items:center;gap:6px;padding:10px 12px;border:1px solid var(--line);background:#fbfaf6;border-radius:3px;cursor:pointer}
+.cat.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.cat b{flex:1;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat span.n{font-size:11px;opacity:.65}
+.cat .mv{display:flex;flex-direction:column;gap:0}
+.cat .mv button{border:0;background:transparent;font-size:10px;line-height:1.1;padding:1px 4px;opacity:.55}
+.cat .mv button:hover{opacity:1}
+.drop{margin:16px 0;border:2px dashed #b7b3a4;border-radius:4px;padding:26px;text-align:center;background:#fbfaf6;transition:.15s}
+.drop.over{border-color:var(--ink);background:var(--acid)}
+.drop p{font-size:14px;font-weight:700}
+.opt{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;font-size:12px;color:var(--muted)}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:10px}
+.item{background:#fbfaf6;border:1px solid var(--line);border-radius:3px;overflow:hidden;display:flex;flex-direction:column}
+.item.dragover{outline:2px solid var(--ink)}
+.item.new{border-color:var(--ok)}
+.thumb{position:relative;aspect-ratio:1/1;background:#dcd9ce}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.handle{position:absolute;top:6px;inset-inline-start:6px;background:rgba(23,24,21,.8);color:#fff;border-radius:3px;padding:0 7px;font-size:14px;cursor:grab;user-select:none}
+.badge{position:absolute;bottom:6px;inset-inline-start:6px;background:var(--ok);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:2px}
+.item .f{padding:8px;display:flex;flex-direction:column;gap:6px}
+.item input{font-size:12px;padding:6px 8px}
+.item .acts{display:flex;gap:4px;flex-wrap:wrap}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.bar{position:fixed;bottom:0;inset-inline:0;background:var(--ink);color:var(--paper);padding:12px 22px;display:flex;align-items:center;gap:14px;z-index:30;transform:translateY(110%);transition:.25s}
+.bar.show{transform:none}
+.bar .msg{flex:1;font-size:13px}
+.bar input{max-width:280px;background:#2a2b27;border-color:#444;color:#fff;font-size:13px;padding:7px 10px}
+.bar .btn{border-color:var(--paper);color:var(--paper)}
+.bar .btn.acid{color:var(--ink)}
+.toast{position:fixed;top:78px;inset-inline-start:50%;transform:translateX(50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:4px;font-size:13px;z-index:50;max-width:92vw;display:none}
+.toast.err{background:var(--danger)}
+.toast.ok{background:var(--ok)}
+.hidden{display:none!important}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.bar{flex-wrap:wrap}.bar input{max-width:none;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>لوحة التحكم <small id="repoLabel">غير متصل</small></h1>
+  <div style="display:flex;gap:8px">
+    <a class="btn sm" href="index.html" target="_blank" style="text-decoration:none;display:inline-block;color:inherit">فتح الموقع ↗</a>
+    <button class="btn sm hidden" id="reloadBtn">إعادة تحميل</button>
+    <button class="btn sm hidden" id="logoutBtn">تسجيل خروج</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- ============ CONNECT ============ -->
+<div class="wrap" id="connectView">
+  <div class="panel connect">
+    <h2>الاتصال بـ GitHub</h2>
+    <p class="hint">اللوحة دي بتشتغل من المتصفح مباشرة: بترفع الصور وتعدّل ملف البيانات في الريبو بتاعك، وGitHub Pages بيحدّث الموقع لوحده.</p>
+    <div class="row2">
+      <div><label>اسم المستخدم على GitHub</label><input type="text" id="cOwner" dir="ltr" placeholder="username" autocomplete="off"></div>
+      <div><label>اسم الريبو</label><input type="text" id="cRepo" dir="ltr" placeholder="my-portfolio" autocomplete="off"></div>
+    </div>
+    <div class="row2">
+      <div><label>البرانش</label><input type="text" id="cBranch" dir="ltr" value="main"></div>
+      <div><label>مسار الموقع داخل الريبو (اختياري)</label><input type="text" id="cBase" dir="ltr" placeholder="سيبه فاضي لو index.html في الجذر"></div>
+    </div>
+    <label>Personal Access Token</label>
+    <input type="password" id="cToken" dir="ltr" placeholder="github_pat_..." autocomplete="off">
+    <p class="hint">بيتخزن في متصفحك إنت بس (على الجهاز ده). ماتشاركوش مع حد.</p>
+    <details>
+      <summary>إزاي أعمل التوكن؟ (دقيقة واحدة)</summary>
+      <ol>
+        <li>افتح <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a></li>
+        <li>سمّيه أي اسم، وحدد مدة الصلاحية.</li>
+        <li>في <b>Repository access</b> اختار <b>Only select repositories</b> واختار ريبو الموقع بس.</li>
+        <li>في <b>Permissions ← Repository permissions</b> خلّي <b>Contents</b> = <b>Read and write</b>.</li>
+        <li>اضغط Generate token وانسخ التوكن هنا.</li>
+      </ol>
+    </details>
+    <button class="btn solid" id="connectBtn" style="margin-top:18px;width:100%;padding:11px">اتصال</button>
+  </div>
+</div>
+
+<!-- ============ EDITOR ============ -->
+<div class="wrap hidden" id="editorView">
+  <div class="layout">
+    <aside class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <b>الأقسام</b>
+        <button class="btn sm acid" id="addCatBtn">＋ قسم جديد</button>
+      </div>
+      <div class="cats" id="catList"></div>
+      <p class="hint" style="margin-top:12px">الترتيب هنا هو نفس ترتيب القائمة العلوية في الموقع.</p>
+    </aside>
+
+    <section class="panel" id="catPanel"></section>
+  </div>
+</div>
+
+<!-- ============ PUBLISH BAR ============ -->
+<div class="bar" id="bar">
+  <div class="msg" id="barMsg"></div>
+  <input type="text" id="commitMsg" placeholder="وصف التعديل (اختياري)">
+  <button class="btn" id="discardBtn">تراجع</button>
+  <button class="btn acid" id="publishBtn">نشر التعديلات</button>
+</div>
+
+<input type="file" id="fileInput" accept="image/*" multiple class="hidden">
+<input type="file" id="pdfInput" accept="application/pdf,image/*" class="hidden">
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  var enc = function (p) { return /^(https?:)?\/\//.test(p) ? p : String(p).split('/').map(encodeURIComponent).join('/'); };
+
+  var CFG_KEY = 'hm_admin_cfg';
+  var MANAGED = /^(images|files)\//;   // only these folders are ever deleted by the panel
+  var cfg = null, data = null, original = '';
+  var sel = 0, busy = false;
+  var pending = {};   // path -> { b64, size }
+  var previews = {};  // path -> objectURL (kept for the session)
+  var pdfTarget = -1;
+
+  /* ---------- helpers ---------- */
+  function toast(msg, kind, ms) {
+    var t = $('#toast');
+    t.textContent = msg; t.className = 'toast ' + (kind || ''); t.style.display = 'block';
+    clearTimeout(toast._t);
+    if (ms !== 0) toast._t = setTimeout(function () { t.style.display = 'none'; }, ms || 3500);
+  }
+  function slug(s) {
+    return String(s).toLowerCase().replace(/\.[a-z0-9]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'file';
+  }
+  function extOf(file) {
+    var m = /\.([a-z0-9]+)$/i.exec(file.name || '');
+    if (m) return m[1].toLowerCase().replace('jpeg', 'jpg');
+    return { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif', 'application/pdf': 'pdf' }[file.type] || 'bin';
+  }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+  function repoPath(p) {
+    var b = (cfg.base || '').replace(/^\/+|\/+$/g, '');
+    return b ? b + '/' + p : p;
+  }
+  function blobToB64(blob) {
+    return new Promise(function (res, rej) {
+      var r = new FileReader();
+      r.onload = function () { res(String(r.result).split(',')[1]); };
+      r.onerror = rej;
+      r.readAsDataURL(blob);
+    });
+  }
+  function b64ToText(b64) {
+    var bin = atob(b64.replace(/\s/g, ''));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function src(p) { return previews[p] || enc(p); }
+  function isDirty() { return JSON.stringify(data) !== original || Object.keys(pending).length > 0; }
+
+  /* ---------- GitHub API ---------- */
+  function gh(path, opts) {
+    opts = opts || {};
+    var headers = {
+      'Authorization': 'Bearer ' + cfg.token,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    };
+    if (opts.body) headers['Content-Type'] = 'application/json';
+    return fetch('https://api.github.com/repos/' + cfg.owner + '/' + cfg.repo + path, {
+      method: opts.method || 'GET', headers: headers, body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function (r) {
+      if (r.ok) return r.status === 204 ? null : r.json();
+      return r.text().then(function (t) {
+        var e = new Error(t.slice(0, 300)); e.status = r.status; throw e;
+      });
+    });
+  }
+  function explain(e) {
+    if (e.status === 401) return 'التوكن غلط أو منتهي.';
+    if (e.status === 403) return 'مفيش صلاحية — اتأكد إن Contents = Read and write.';
+    if (e.status === 404) return 'الريبو أو الملف مش موجود — راجع اسم المستخدم والريبو وصلاحيات التوكن.';
+    if (e.status === 422 || e.status === 409) return 'GitHub رفض التعديل (' + e.status + '). جرب إعادة التحميل وكرر العملية.';
+    return e.message || 'خطأ غير متوقع';
+  }
+
+  function loadData() {
+    var url = '/contents/' + enc(repoPath('data/portfolio.json')) + '?ref=' + encodeURIComponent(cfg.branch);
+    return gh(url).then(function (j) {
+      return JSON.parse(b64ToText(j.content));
+    });
+  }
+
+  /* ---------- connect / session ---------- */
+  function showEditor() {
+    $('#connectView').classList.add('hidden');
+    $('#editorView').classList.remove('hidden');
+    $('#reloadBtn').classList.remove('hidden');
+    $('#logoutBtn').classList.remove('hidden');
+    $('#repoLabel').textContent = cfg.owner + '/' + cfg.repo + ' · ' + cfg.branch;
+  }
+  function start(c) {
+    cfg = c;
+    $('#connectBtn').disabled = true;
+    toast('جاري الاتصال...', '', 0);
+    return loadData().then(function (d) {
+      data = d; data.categories = data.categories || [];
+      data.categories.forEach(function (x) { x.items = x.items || []; });
+      original = JSON.stringify(data);
+      pending = {}; sel = 0;
+      localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+      showEditor(); render();
+      toast('اتصلت ✓', 'ok');
+    }).catch(function (e) {
+      $('#toast').style.display = 'none';
+      cfg = null;
+      toast(e.status === 404 ? 'ملف data/portfolio.json مش موجود في الريبو. ارفع الموقع كامل الأول (مع فولدر data) أو راجع المسار/البرانش.' : explain(e), 'err', 7000);
+    }).then(function () { $('#connectBtn').disabled = false; });
+  }
+  $('#connectBtn').onclick = function () {
+    var c = {
+      owner: $('#cOwner').value.trim(), repo: $('#cRepo').value.trim(),
+      branch: $('#cBranch').value.trim() || 'main', base: $('#cBase').value.trim(), token: $('#cToken').value.trim()
+    };
+    if (!c.owner || !c.repo || !c.token) return toast('كمّل البيانات الأساسية (المستخدم، الريبو، التوكن).', 'err');
+    start(c);
+  };
+  $('#logoutBtn').onclick = function () {
+    if (isDirty() && !confirm('فيه تعديلات لسه ماتنشرتش. تخرج برضه؟')) return;
+    localStorage.removeItem(CFG_KEY); location.reload();
+  };
+  $('#reloadBtn').onclick = function () {
+    if (isDirty() && !confirm('هتفقد التعديلات اللي لسه ماتنشرتش. تكمل؟')) return;
+    start(cfg);
+  };
+  window.addEventListener('beforeunload', function (e) {
+    if (data && isDirty()) { e.preventDefault(); e.returnValue = ''; }
+  });
+
+  /* ---------- rendering ---------- */
+  function cat() { return data.categories[sel]; }
+
+  function render() { renderCats(); renderPanel(); updateBar(); }
+
+  function renderCats() {
+    var el = $('#catList');
+    if (!data.categories.length) { el.innerHTML = '<p class="hint">مفيش أقسام لسه.</p>'; return; }
+    el.innerHTML = data.categories.map(function (c, i) {
+      return '<div class="cat' + (i === sel ? ' on' : '') + '" data-i="' + i + '">' +
+        '<div class="mv"><button data-mv="-1" title="فوق">▲</button><button data-mv="1" title="تحت">▼</button></div>' +
+        '<b>' + esc(c.title || '(بدون اسم)') + '</b><span class="n">' + c.items.length + '</span></div>';
+    }).join('');
+  }
+  $('#catList').addEventListener('click', function (e) {
+    var row = e.target.closest('.cat'); if (!row) return;
+    var i = +row.dataset.i;
+    var mv = e.target.closest('[data-mv]');
+    if (mv) {
+      var j = i + +mv.dataset.mv;
+      if (j < 0 || j >= data.categories.length) return;
+      var arr = data.categories; var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+      sel = j; render(); return;
+    }
+    sel = i; render();
+  });
+
+  function renderPanel() {
+    var p = $('#catPanel');
+    var c = cat();
+    if (!c) { p.innerHTML = '<div class="empty">اعمل قسم جديد من الزرار اللي على اليمين عشان تبدأ.</div>'; return; }
+    p.innerHTML =
+      '<div class="row2">' +
+        '<div><label>اسم القسم (بيظهر كعنوان)</label><input type="text" dir="auto" data-f="title" value="' + esc(c.title) + '"></div>' +
+        '<div><label>الاسم في القائمة العلوية</label><input type="text" dir="auto" data-f="nav" value="' + esc(c.nav) + '"></div>' +
+      '</div>' +
+      '<div class="row2">' +
+        '<div><label>الكلمة الصغيرة فوق العنوان</label><input type="text" dir="auto" data-f="kicker" value="' + esc(c.kicker) + '"></div>' +
+        '<div><label>شكل العرض</label><select data-f="layout">' +
+          '<option value="grid"' + (c.layout !== 'brand' ? ' selected' : '') + '>شبكة مربعات (سوشيال ميديا)</option>' +
+          '<option value="brand"' + (c.layout === 'brand' ? ' selected' : '') + '>كروت كبيرة (براندينج / لوجو)</option>' +
+        '</select></div>' +
+      '</div>' +
+      '<label>الوصف</label><input type="text" dir="auto" data-f="description" value="' + esc(c.description) + '">' +
+      '<p class="hint">اكتب <code dir="ltr">{count}</code> في الوصف وهيتحول لعدد الشغل تلقائيًا.</p>' +
+      '<div class="drop" id="drop"><p>اسحب الصور هنا أو</p>' +
+        '<button class="btn solid" id="pickBtn" style="margin-top:8px">اختار صور من الجهاز</button>' +
+        '<label class="opt"><input type="checkbox" id="compress" checked> ضغط الصور الكبيرة تلقائيًا (أسرع للموقع ومساحة أقل)</label></div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px">' +
+        '<b>الشغل في القسم (' + c.items.length + ')</b>' +
+        '<button class="btn sm danger" id="delCatBtn">حذف القسم</button></div>' +
+      '<div class="items" id="items">' + (c.items.length ? c.items.map(itemHtml).join('') : '') + '</div>' +
+      (c.items.length ? '' : '<div class="empty">القسم فاضي — ارفع صور من فوق.</div>');
+  }
+
+  function itemHtml(it, i) {
+    var isNew = !!pending[it.src];
+    return '<div class="item' + (isNew ? ' new' : '') + '" data-i="' + i + '">' +
+      '<div class="thumb"><img src="' + esc(src(it.src)) + '" alt="" loading="lazy">' +
+      '<span class="handle" title="اسحب للترتيب">⋮⋮</span>' + (isNew ? '<span class="badge">جديد</span>' : '') + '</div>' +
+      '<div class="f"><input type="text" dir="auto" data-it="title" placeholder="عنوان (اختياري)" value="' + esc(it.title) + '">' +
+      '<input type="text" dir="ltr" data-it="link" placeholder="رابط عند الضغط (اختياري)" value="' + esc(it.link) + '">' +
+      '<div class="acts"><button class="btn sm" data-act="prev">◂ قبل</button><button class="btn sm" data-act="next">بعد ▸</button>' +
+      '<button class="btn sm" data-act="pdf" title="ارفع PDF أو صورة تتفتح لما حد يضغط">ملف مرتبط</button>' +
+      '<button class="btn sm danger" data-act="del">حذف</button></div></div></div>';
+  }
+
+  /* delegated events for the category panel */
+  $('#catPanel').addEventListener('input', function (e) {
+    var c = cat(); if (!c) return;
+    var f = e.target.dataset.f, it = e.target.dataset.it;
+    if (f) { c[f] = e.target.value; renderCats(); updateBar(); }
+    else if (it) {
+      var card = e.target.closest('.item'); var item = c.items[+card.dataset.i];
+      if (e.target.value) item[it] = e.target.value; else delete item[it];
+      updateBar();
+    }
+  });
+  $('#catPanel').addEventListener('change', function (e) {
+    if (e.target.dataset.f === 'layout') { cat().layout = e.target.value; updateBar(); }
+  });
+  $('#catPanel').addEventListener('click', function (e) {
+    var c = cat(); if (!c) return;
+    if (e.target.id === 'pickBtn') { $('#fileInput').click(); return; }
+    if (e.target.id === 'delCatBtn') {
+      if (!confirm('تحذف قسم "' + c.title + '" وكل صوره؟ (الحذف بيتنفذ فعليًا لما تضغط نشر)')) return;
+      data.categories.splice(sel, 1); sel = Math.max(0, sel - 1); render(); return;
+    }
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var i = +b.closest('.item').dataset.i, act = b.dataset.act;
+    if (act === 'del') {
+      var gone = c.items.splice(i, 1)[0];
+      cleanupPending();
+      render(); return;
+    }
+    if (act === 'prev' || act === 'next') {
+      var j = act === 'prev' ? i - 1 : i + 1;
+      if (j < 0 || j >= c.items.length) return;
+      var t = c.items[i]; c.items[i] = c.items[j]; c.items[j] = t;
+      render(); return;
+    }
+    if (act === 'pdf') { pdfTarget = i; $('#pdfInput').click(); }
+  });
+
+  /* drag & drop reorder (via the ⋮⋮ handle) */
+  var dragFrom = -1;
+  $('#catPanel').addEventListener('mousedown', function (e) {
+    if (e.target.classList.contains('handle')) e.target.closest('.item').draggable = true;
+  });
+  $('#catPanel').addEventListener('dragstart', function (e) {
+    var card = e.target.closest && e.target.closest('.item');
+    if (!card) return;
+    dragFrom = +card.dataset.i; e.dataTransfer.effectAllowed = 'move';
+    try { e.dataTransfer.setData('text/plain', String(dragFrom)); } catch (x) {}
+  });
+  $('#catPanel').addEventListener('dragend', function (e) {
+    var card = e.target.closest && e.target.closest('.item'); if (card) card.draggable = false;
+    dragFrom = -1;
+    document.querySelectorAll('.item.dragover').forEach(function (n) { n.classList.remove('dragover'); });
+  });
+  $('#catPanel').addEventListener('dragover', function (e) {
+    if (dragFrom < 0) return;   // files dragged from the OS are handled by the drop zone
+    var card = e.target.closest('.item'); if (!card) return;
+    e.preventDefault();
+    document.querySelectorAll('.item.dragover').forEach(function (n) { n.classList.remove('dragover'); });
+    card.classList.add('dragover');
+  });
+  $('#catPanel').addEventListener('drop', function (e) {
+    if (dragFrom < 0) return;
+    var card = e.target.closest('.item'); if (!card) return;
+    e.preventDefault();
+    var to = +card.dataset.i, c = cat();
+    if (to !== dragFrom) { var m = c.items.splice(dragFrom, 1)[0]; c.items.splice(to, 0, m); }
+    dragFrom = -1; render();
+  });
+
+  /* ---------- adding categories ---------- */
+  $('#addCatBtn').onclick = function () {
+    var id = 'cat-' + uid();
+    data.categories.push({ id: id, title: 'New Category', nav: 'New', kicker: 'New Category', description: '{count} projects.', layout: 'grid', items: [] });
+    sel = data.categories.length - 1; render();
+    var t = document.querySelector('[data-f="title"]'); if (t) { t.focus(); t.select(); }
+  };
+
+  /* ---------- uploading ---------- */
+  function prepImage(file, compress) {
+    var ext = extOf(file);
+    var keep = { blob: file, ext: ext };
+    if (!compress || /gif|svg/.test(file.type) || typeof createImageBitmap !== 'function') return Promise.resolve(keep);
+    return createImageBitmap(file).then(function (bmp) {
+      var MAX = 2200, sc = Math.min(1, MAX / Math.max(bmp.width, bmp.height));
+      if (sc === 1 && file.size < 1.5e6) return keep;
+      var cv = document.createElement('canvas');
+      cv.width = Math.round(bmp.width * sc); cv.height = Math.round(bmp.height * sc);
+      var ctx = cv.getContext('2d');
+      var png = file.type === 'image/png';
+      if (!png) { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, cv.width, cv.height); }
+      ctx.drawImage(bmp, 0, 0, cv.width, cv.height);
+      return new Promise(function (res) {
+        cv.toBlob(function (b) {
+          res(b && b.size < file.size ? { blob: b, ext: png ? 'png' : 'jpg' } : keep);
+        }, png ? 'image/png' : 'image/jpeg', 0.88);
+      });
+    }).catch(function () { return keep; });
+  }
+
+  function stage(blob, folder, name, ext) {
+    var path = folder + '/' + uid() + '-' + slug(name) + '.' + ext;
+    return blobToB64(blob).then(function (b64) {
+      pending[path] = { b64: b64, size: blob.size };
+      if (/^image\//.test(blob.type)) previews[path] = URL.createObjectURL(blob);
+      return path;
+    });
+  }
+
+  function addImages(files) {
+    var c = cat(); if (!c) return toast('اختار قسم الأول.', 'err');
+    files = Array.prototype.filter.call(files, function (f) { return /^image\//.test(f.type); });
+    if (!files.length) return toast('مفيش صور صالحة في اللي اخترته.', 'err');
+    var compress = $('#compress') ? $('#compress').checked : true;
+    var chain = Promise.resolve(), n = 0;
+    files.forEach(function (f) {
+      chain = chain.then(function () {
+        toast('جاري تجهيز الصور ' + (++n) + '/' + files.length + '...', '', 0);
+        return prepImage(f, compress).then(function (r) {
+          return stage(r.blob, 'images/' + c.id, f.name, r.ext);
+        }).then(function (path) { c.items.push({ src: path, title: '' }); });
+      });
+    });
+    chain.then(function () { render(); toast('اتضافت ' + files.length + ' صورة — اضغط "نشر التعديلات" لما تخلص.', 'ok'); })
+      .catch(function () { render(); toast('حصلت مشكلة في تجهيز الصور.', 'err'); });
+  }
+  $('#fileInput').onchange = function () { addImages(this.files); this.value = ''; };
+
+  $('#pdfInput').onchange = function () {
+    var f = this.files[0]; this.value = '';
+    var c = cat(); if (!f || !c || pdfTarget < 0) return;
+    var i = pdfTarget; pdfTarget = -1;
+    toast('جاري تجهيز الملف...', '', 0);
+    stage(f, 'files/' + c.id, f.name, extOf(f)).then(function (path) {
+      c.items[i].link = path; render(); toast('اتربط الملف — اضغط نشر لما تخلص.', 'ok');
+    });
+  };
+
+  var panel = $('#catPanel');
+  panel.addEventListener('dragover', function (e) {
+    if (dragFrom >= 0) return;
+    var d = e.target.closest('#drop');
+    if (d && e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') > -1) { e.preventDefault(); d.classList.add('over'); }
+  });
+  panel.addEventListener('dragleave', function (e) { var d = e.target.closest('#drop'); if (d) d.classList.remove('over'); });
+  panel.addEventListener('drop', function (e) {
+    var d = e.target.closest('#drop');
+    if (d && e.dataTransfer && e.dataTransfer.files.length) { e.preventDefault(); d.classList.remove('over'); addImages(e.dataTransfer.files); }
+  });
+  window.addEventListener('dragover', function (e) { e.preventDefault(); });
+  window.addEventListener('drop', function (e) { if (!e.target.closest('#drop')) e.preventDefault(); });
+
+  /* drop staged files nobody references any more */
+  function referenced() {
+    var set = {};
+    data.categories.forEach(function (c) {
+      c.items.forEach(function (it) { if (it.src) set[it.src] = 1; if (it.link) set[it.link] = 1; });
+    });
+    return set;
+  }
+  function cleanupPending() {
+    var ref = referenced();
+    Object.keys(pending).forEach(function (p) { if (!ref[p]) delete pending[p]; });
+  }
+
+  /* ---------- publish bar ---------- */
+  function updateBar() {
+    cleanupPending();
+    var d = isDirty();
+    $('#bar').classList.toggle('show', d || busy);
+    var n = Object.keys(pending).length;
+    if (!busy) $('#barMsg').textContent = 'فيه تعديلات لسه ماتنشرتش' + (n ? ' (' + n + ' ملف جديد للرفع)' : '');
+    $('#publishBtn').disabled = busy; $('#discardBtn').disabled = busy;
+  }
+  $('#discardBtn').onclick = function () {
+    if (!confirm('تلغي كل التعديلات اللي لسه ماتنشرتش؟')) return;
+    data = JSON.parse(original); pending = {}; sel = Math.min(sel, data.categories.length - 1); if (sel < 0) sel = 0; render();
+  };
+
+  $('#publishBtn').onclick = function () {
+    if (busy) return;
+    var bad = data.categories.filter(function (c) { return !String(c.title || '').trim(); });
+    if (bad.length) return toast('فيه قسم من غير اسم — اكتبله اسم الأول.', 'err');
+    busy = true; updateBar();
+    var say = function (m) { $('#barMsg').textContent = m; };
+    var branch = cfg.branch;
+    var ref = referenced();
+    var toUpload = Object.keys(pending).filter(function (p) { return ref[p]; });
+
+    // files that existed before and are no longer used anywhere → delete (images/ and files/ only)
+    var before = {};
+    JSON.parse(original).categories.forEach(function (c) {
+      (c.items || []).forEach(function (it) { if (it.src) before[it.src] = 1; if (it.link) before[it.link] = 1; });
+    });
+    var toDelete = Object.keys(before).filter(function (p) { return !ref[p] && MANAGED.test(p); });
+
+    var baseCommit, baseTree, entries = [];
+    say('بيبدأ النشر...');
+    gh('/git/ref/heads/' + encodeURIComponent(branch)).then(function (r) {
+      baseCommit = r.object.sha;
+      return gh('/git/commits/' + baseCommit);
+    }).then(function (c) {
+      baseTree = c.tree.sha;
+      return toDelete.length ? gh('/git/trees/' + baseTree + '?recursive=1') : { tree: [] };
+    }).then(function (tr) {
+      var exists = {}; tr.tree.forEach(function (t) { exists[t.path] = 1; });
+      toDelete.forEach(function (p) {
+        if (exists[repoPath(p)]) entries.push({ path: repoPath(p), mode: '100644', type: 'blob', sha: null });
+      });
+      var chain = Promise.resolve(), i = 0;
+      toUpload.forEach(function (p) {
+        chain = chain.then(function () {
+          say('رفع الملفات ' + (++i) + '/' + toUpload.length + '...');
+          return gh('/git/blobs', { method: 'POST', body: { content: pending[p].b64, encoding: 'base64' } }).then(function (b) {
+            entries.push({ path: repoPath(p), mode: '100644', type: 'blob', sha: b.sha });
+          });
+        });
+      });
+      return chain;
+    }).then(function () {
+      say('حفظ ملف البيانات...');
+      var json = JSON.stringify(data, null, 2) + '\n';
+      return gh('/git/blobs', { method: 'POST', body: { content: json, encoding: 'utf-8' } });
+    }).then(function (b) {
+      entries.push({ path: repoPath('data/portfolio.json'), mode: '100644', type: 'blob', sha: b.sha });
+      say('إنشاء النسخة...');
+      return gh('/git/trees', { method: 'POST', body: { base_tree: baseTree, tree: entries } });
+    }).then(function (t) {
+      return gh('/git/commits', { method: 'POST', body: {
+        message: ($('#commitMsg').value.trim() || 'Update portfolio via admin panel'), tree: t.sha, parents: [baseCommit]
+      } });
+    }).then(function (c) {
+      return gh('/git/refs/heads/' + encodeURIComponent(branch), { method: 'PATCH', body: { sha: c.sha } });
+    }).then(function () {
+      original = JSON.stringify(data); pending = {}; $('#commitMsg').value = '';
+      busy = false; render();
+      toast('اتنشر ✓ — الموقع بيتحدّث خلال دقيقة تقريبًا.', 'ok', 7000);
+    }).catch(function (e) {
+      busy = false; updateBar();
+      toast('فشل النشر: ' + explain(e), 'err', 9000);
+    });
+  };
+
+  /* ---------- boot ---------- */
+  try { var saved = JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); } catch (e) { saved = null; }
+  if (saved && saved.token) {
+    ['Owner', 'Repo', 'Branch', 'Base'].forEach(function (k) { $('#c' + k).value = saved[k.toLowerCase()] || (k === 'Branch' ? 'main' : ''); });
+    start(saved);
+  }
+})();
+</script>
+</body>
+</html>
